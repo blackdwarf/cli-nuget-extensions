@@ -43,7 +43,19 @@ NuGet will add an additional logic to recognize the `dotnet-extensions` top leve
     },
 
     "dotnet-extensions": {
-        "dotnet-extension-package": "1.0.0"
+        "tools":{
+            "dotnet-extension-package": "1.0.0"
+        },
+        aliases: {
+            "foo": {
+                package:"dotnet-extension-subpackage"
+                command:"foo"
+            },
+            "bar": {
+                package:"dotnet-extension-subpackage2"
+                command:"foo"
+            }
+        }
     }
 }
 ```
@@ -56,7 +68,8 @@ Imports information per TfM of the tool would need to be included to solve the i
 ```
 {
     "version": "1.0.0-*",
-    "name": "dotnet-extension-package"
+    "name": "dotnet-extension-package",
+    "command" : "foo",
 
     "dependencies": {
         "NETStandard.Library": "1.0.0-*"
@@ -90,6 +103,7 @@ Summary of NuGet changes:
 - [ ] Add understanding of "dotnet-extension-data" node in NuSpec of extension package
 - [ ] Include imports from "dotnet-extension-data" in restore of each targetframework
 - [ ] Add "dotnet-extension-data" nuspec output to `nuget pack`
+- [ ] consumer project lockfile needs to record which version of extension package was restored
 
 ## Invocation of Extension Command (dotnet cli side)
 
